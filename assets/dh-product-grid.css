@@ -1,11 +1,3 @@
-/* ============================================================
-   dh-product-grid.css
-   Section 2 – Product Grid + Popup
-   Desktop: 3 cols, hotspot bottom-left
-   Mobile:  2 cols, no gap, hotspot top-right (per screenshot)
-   Author: Dharani Karthikeyan
-   ============================================================ */
-
 :root {
   --dh-yellow:   #f0d800;
   --dh-black:    #111111;
@@ -15,9 +7,6 @@
   --dh-font-sans:  'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* ============================================================
-   GRID SECTION
-   ============================================================ */
 .dh-grid {
   padding: 56px 40px 72px;
   max-width: 1400px;
@@ -29,27 +18,24 @@
 .dh-grid__heading {
   font-family: var(--dh-font-serif);
   font-size: clamp(22px, 2.8vw, 34px);
-  font-weight: 400;          /* light weight — matches Figma */
+  font-weight: 400;          
   color: var(--dh-black);
   margin: 0 0 28px;
   letter-spacing: -0.01em;
 }
 
-/* 3-column desktop grid */
 .dh-grid__items {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
 }
 
-/* Each cell — portrait aspect ratio */
 .dh-grid__item {
   position: relative;
   overflow: hidden;
   aspect-ratio: 3 / 4;
 }
 
-/* Image fills cell */
 .dh-grid__img {
   width: 100%;
   height: 100%;
@@ -62,7 +48,6 @@
   transform: scale(1.04);
 }
 
-/* Placeholder for unassigned product */
 .dh-grid__placeholder {
   width: 100%;
   height: 100%;
@@ -77,7 +62,6 @@
   opacity: 0.25;
 }
 
-/* ── Hotspot "+" — DESKTOP: centered ── */
 .dh-grid__hotspot {
   position: absolute;
   top: 50%;
@@ -106,9 +90,7 @@
   transform: translate(-50%, -50%) scale(1.12);
 }
 
-/* ============================================================
-   POPUP OVERLAY
-   ============================================================ */
+
 .dh-popup-overlay {
   position: fixed;
   inset: 0;
@@ -128,7 +110,6 @@
   pointer-events: auto;
 }
 
-/* ── Popup card ── */
 .dh-popup {
   background: var(--dh-white);
   width: 100%;
@@ -147,7 +128,6 @@
   transform: translateY(0);
 }
 
-/* Close button */
 .dh-popup__close {
   position: absolute;
   top: 10px;
@@ -163,7 +143,6 @@
 }
 .dh-popup__close:hover { opacity: 0.5; }
 
-/* Header row: image + title/price/desc */
 .dh-popup__header {
   display: flex;
   gap: 14px;
@@ -209,7 +188,6 @@
   margin: 0;
 }
 
-/* ── Variant sections ── */
 .dh-popup__variants { margin-bottom: 18px; }
 
 .dh-popup__option-group { margin-bottom: 14px; }
@@ -223,8 +201,6 @@
   display: block;
   margin-bottom: 7px;
 }
-
-/* Color inline toggle buttons */
 .dh-popup__color-options { display: flex; }
 
 .dh-popup__color-btn {
@@ -248,7 +224,6 @@
   color: var(--dh-white);
 }
 
-/* Size dropdown */
 .dh-popup__size-select {
   width: 100%;
   padding: 11px 14px;
@@ -270,7 +245,6 @@
   outline-offset: 1px;
 }
 
-/* ── Add to Cart button ── */
 .dh-popup__atc {
   width: 100%;
   display: flex;
@@ -291,7 +265,6 @@
   transition: color 0.38s ease;
 }
 
-/* Yellow fill from left on hover */
 .dh-popup__atc::before {
   content: '';
   position: absolute;
@@ -317,7 +290,6 @@
   pointer-events: none;
 }
 
-/* Status message */
 .dh-popup__status {
   font-family: var(--dh-font-sans);
   font-size: 11.5px;
@@ -330,15 +302,10 @@
 .dh-popup__status.is-error   { color: #c62828; font-weight: 700; }
 
 
-/* ============================================================
-   RESPONSIVE — MOBILE  (≤ 768px)
-   2-column grid, no gap between cells,
-   hotspot moves to TOP-RIGHT corner (exact screenshot match)
-   ============================================================ */
 @media (max-width: 768px) {
 
   .dh-grid {
-    padding: 32px 0 48px;    /* edge-to-edge on mobile */
+    padding: 32px 0 48px;    
   }
 
   .dh-grid__heading {
@@ -347,18 +314,17 @@
     margin-bottom: 20px;
   }
 
-  /* 2-column grid, zero gap (matches screenshot) */
+
   .dh-grid__items {
     grid-template-columns: repeat(2, 1fr);
     gap: 0;
   }
 
-  /* Square cells on mobile */
+
   .dh-grid__item {
     aspect-ratio: 1 / 1;
   }
 
-  /* ── Hotspot: MOBILE = centered ── */
   .dh-grid__hotspot {
     bottom: auto;
     left: 50%;
@@ -374,7 +340,6 @@
     transform: translate(-50%, -50%) scale(1.12);
   }
 
-  /* Popup takes most of screen on mobile */
   .dh-popup {
     max-width: 100%;
     margin: 0;
@@ -383,7 +348,7 @@
   }
 
   .dh-popup-overlay {
-    align-items: flex-end;   /* sheet slides up from bottom on mobile */
+    align-items: flex-end;   
   }
 
   .dh-popup__img {

@@ -1,29 +1,9 @@
-/**
- * ============================================================
- * dh-product-grid.js
- * Handles all popup + cart logic for the Product Grid section.
- *
- * Features:
- *   1. Open/close product popup on hotspot click
- *   2. Render variant selectors dynamically from product data
- *      — Color → inline toggle buttons
- *      — Size  → styled <select> dropdown
- *   3. Add to Cart via Shopify AJAX Cart API (/cart/add.js)
- *   4. Auto-add "Soft Winter Jacket" when Black + Medium chosen
- *   5. Keyboard (Escape) + backdrop click to close
- *
- * Rules: Vanilla JavaScript ONLY — zero jQuery
- * Author: Dharani Karthikeyan
- * ============================================================
- */
 
 (function () {
   'use strict';
 
-  /* ── Soft Winter Jacket handle (from imported CSV) ── */
   var JACKET_HANDLE = 'dark-winter-jacket';
 
-  /* ── DOM refs ── */
   var overlay  = document.getElementById('dhPopupOverlay');
   var closeBtn = document.getElementById('dhPopupClose');
   var imgEl    = document.getElementById('dhPopupImg');
@@ -34,7 +14,6 @@
   var atcBtn   = document.getElementById('dhPopupATC');
   var statusEl = document.getElementById('dhPopupStatus');
 
-  /* ── State ── */
   var currentVariants = [];  // Shopify variant objects
   var currentOptions  = [];  // [{name, values[]}]
   var selectedValues  = {};  // { 'Color': 'Black', 'Size': 'M' }
@@ -48,7 +27,7 @@
    * @param {HTMLButtonElement} btn — the clicked hotspot
    */
   function openPopup(btn) {
-    /* Parse product data from data-attributes */
+    
     try {
       currentVariants = JSON.parse(btn.dataset.productVariants);
       currentOptions  = JSON.parse(btn.dataset.productOptions);
@@ -60,38 +39,30 @@
 
     selectedValues = {};
 
-    /* Fill static fields */
     imgEl.src             = btn.dataset.productImage  || '';
     imgEl.alt             = btn.dataset.productTitle  || '';
     titleEl.textContent   = btn.dataset.productTitle  || '';
     priceEl.textContent   = btn.dataset.productPrice  || '';
     descEl.textContent    = btn.dataset.productDescription || '';
 
-    /* Build variant UI */
     renderVariants();
 
-    /* Clear any previous status */
     setStatus('', '');
 
-    /* Show overlay */
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden', 'false');
 
-    /* Trap focus on close button */
     closeBtn.focus();
 
-    /* Prevent background scroll */
     document.body.style.overflow = 'hidden';
   }
 
-  /** Hide popup and restore page scroll. */
   function closePopup() {
     overlay.classList.remove('is-open');
     overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 
-  /* ── Close triggers ── */
   closeBtn.addEventListener('click', closePopup);
 
   overlay.addEventListener('click', function (e) {
@@ -102,7 +73,6 @@
     if (e.key === 'Escape' && overlay.classList.contains('is-open')) closePopup();
   });
 
-  /* ── Hotspot click — delegated to document body ── */
   document.addEventListener('click', function (e) {
     var hotspot = e.target.closest('.dh-grid__hotspot');
     if (hotspot) {
@@ -111,16 +81,6 @@
     }
   });
 
-  /* ============================================================
-     2. RENDER VARIANT SELECTORS
-     ============================================================ */
-
-  /**
-   * Builds the variant selector UI inside the popup.
-   * Rule:
-   *   index 0 (usually "Color") → inline toggle buttons
-   *   index 1+ (usually "Size") → styled <select> dropdown
-   */
   function renderVariants() {
     varEl.innerHTML = '';
 
@@ -137,7 +97,7 @@
       group.appendChild(label);
 
       if (idx === 0) {
-        /* ── Color: inline toggle buttons ── */
+       
         var colorWrap = document.createElement('div');
         colorWrap.className = 'dh-popup__color-options';
 
@@ -162,12 +122,11 @@
         group.appendChild(colorWrap);
 
       } else {
-        /* ── Size/other: dropdown ── */
+        
         var select = document.createElement('select');
         select.className = 'dh-popup__size-select';
         select.setAttribute('aria-label', option.name);
 
-        /* Placeholder */
         var placeholder = document.createElement('option');
         placeholder.value    = '';
         placeholder.textContent = 'Choose your ' + option.name.toLowerCase();
@@ -193,14 +152,6 @@
     });
   }
 
-  /* ============================================================
-     3. FIND MATCHING VARIANT
-     ============================================================ */
-
-  /**
-   * Returns the Shopify variant whose option values match
-   * every currently selected value, or null if none.
-   */
   function findMatchingVariant() {
     if (!currentVariants.length) return null;
 
@@ -258,10 +209,7 @@
       });
   }
 
-  /**
-   * Returns true when the selection qualifies for the auto-add rule:
-   * Color = Black AND Size = Medium
-   */
+
   function shouldAutoAdd() {
     return (
       (selectedValues['Color'] || '').toLowerCase() === 'black' &&
@@ -269,9 +217,6 @@
     );
   }
 
-  /* ============================================================
-     5. ADD TO CART CLICK HANDLER
-     ============================================================ */
 
   atcBtn.addEventListener('click', function () {
     setStatus('', '');
@@ -328,9 +273,6 @@
       });
   });
 
-  /* ============================================================
-     6. UTILITY
-     ============================================================ */
 
   /**
    * Update the status paragraph.
