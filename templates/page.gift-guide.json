@@ -12,6 +12,7 @@
     "dh_banner": {
       "type": "dh-banner",
       "settings": {
+        "bg_image": "shopify://shop_images/bg.png",
         "brand_name": "TISSO VISON",
         "nav_tagline": "Find the ideal gift for your loved ones.",
         "choose_gift_label": "CHOOSE GIFT",
@@ -25,19 +26,59 @@
     },
     "dh_product_grid": {
       "type": "dh-product-grid",
+      "blocks": {
+        "b1": {
+          "type": "product_item",
+          "settings": {
+            "product": "black-leather-bag"
+          }
+        },
+        "b2": {
+          "type": "product_item",
+          "settings": {
+            "product": "blue-silk-tuxedo"
+          }
+        },
+        "b3": {
+          "type": "product_item",
+          "settings": {
+            "product": "chequered-red-shirt"
+          }
+        },
+        "b4": {
+          "type": "product_item",
+          "settings": {
+            "product": "classic-leather-jacket"
+          }
+        },
+        "b5": {
+          "type": "product_item",
+          "settings": {
+            "product": "classic-varsity-top"
+          }
+        },
+        "b6": {
+          "type": "product_item",
+          "settings": {
+            "product": "dark-denim-top"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6"
+      ],
       "settings": {
         "grid_heading": "Tisso vison in the wild"
-      },
-      "blocks": {
-        "b1": { "type": "product_item", "settings": {} },
-        "b2": { "type": "product_item", "settings": {} },
-        "b3": { "type": "product_item", "settings": {} },
-        "b4": { "type": "product_item", "settings": {} },
-        "b5": { "type": "product_item", "settings": {} },
-        "b6": { "type": "product_item", "settings": {} }
-      },
-      "block_order": ["b1","b2","b3","b4","b5","b6"]
+      }
     }
   },
-  "order": ["dh_banner","dh_product_grid"]
+  "order": [
+    "dh_banner",
+    "dh_product_grid"
+  ]
 }
