@@ -1,0 +1,396 @@
+/* ============================================================
+   dh-product-grid.css
+   Section 2 – Product Grid + Popup
+   Desktop: 3 cols, hotspot bottom-left
+   Mobile:  2 cols, no gap, hotspot top-right (per screenshot)
+   Author: Dharani Karthikeyan
+   ============================================================ */
+
+:root {
+  --dh-yellow:   #f0d800;
+  --dh-black:    #111111;
+  --dh-white:    #ffffff;
+  --dh-light:    #f5f5f5;
+  --dh-font-serif: Georgia, 'Times New Roman', serif;
+  --dh-font-sans:  'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* ============================================================
+   GRID SECTION
+   ============================================================ */
+.dh-grid {
+  padding: 56px 40px 72px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dh-grid__heading {
+  font-family: var(--dh-font-serif);
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 400;          /* light weight — matches Figma */
+  color: var(--dh-black);
+  margin: 0 0 28px;
+  letter-spacing: -0.01em;
+}
+
+/* 3-column desktop grid */
+.dh-grid__items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+/* Each cell — portrait aspect ratio */
+.dh-grid__item {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+/* Image fills cell */
+.dh-grid__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.dh-grid__item:hover .dh-grid__img {
+  transform: scale(1.04);
+}
+
+/* Placeholder for unassigned product */
+.dh-grid__placeholder {
+  width: 100%;
+  height: 100%;
+  background: #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dh-grid__placeholder-svg {
+  width: 50%;
+  height: 50%;
+  opacity: 0.25;
+}
+
+/* ── Hotspot "+" — DESKTOP: centered ── */
+.dh-grid__hotspot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--dh-white);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--dh-black);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.22s ease, transform 0.22s ease;
+  z-index: 5;
+  padding: 0;
+}
+
+.dh-grid__hotspot:hover {
+  background: var(--dh-white);
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+/* ============================================================
+   POPUP OVERLAY
+   ============================================================ */
+.dh-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.48);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Hidden state */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.dh-popup-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Popup card ── */
+.dh-popup {
+  background: var(--dh-white);
+  width: 100%;
+  max-width: 380px;
+  margin: 16px;
+  padding: 28px 22px 22px;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.28s ease;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+.dh-popup-overlay.is-open .dh-popup {
+  transform: translateY(0);
+}
+
+/* Close button */
+.dh-popup__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--dh-black);
+  padding: 4px 6px;
+  transition: opacity 0.2s;
+}
+.dh-popup__close:hover { opacity: 0.5; }
+
+/* Header row: image + title/price/desc */
+.dh-popup__header {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.dh-popup__img {
+  width: 96px;
+  height: 116px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.dh-popup__meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 2px;
+}
+
+.dh-popup__title {
+  font-family: var(--dh-font-serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--dh-black);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.dh-popup__price {
+  font-family: var(--dh-font-sans);
+  font-size: 15px;
+  color: var(--dh-black);
+  margin: 0;
+}
+
+.dh-popup__desc {
+  font-family: var(--dh-font-sans);
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: #555;
+  margin: 0;
+}
+
+/* ── Variant sections ── */
+.dh-popup__variants { margin-bottom: 18px; }
+
+.dh-popup__option-group { margin-bottom: 14px; }
+
+.dh-popup__option-label {
+  font-family: var(--dh-font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--dh-black);
+  display: block;
+  margin-bottom: 7px;
+}
+
+/* Color inline toggle buttons */
+.dh-popup__color-options { display: flex; }
+
+.dh-popup__color-btn {
+  flex: 1;
+  padding: 9px 6px;
+  border: 1px solid var(--dh-black);
+  background: var(--dh-white);
+  font-family: var(--dh-font-sans);
+  font-size: 12.5px;
+  cursor: pointer;
+  text-align: center;
+  margin-right: -1px;        /* collapse borders */
+  transition: background 0.2s, color 0.2s;
+}
+
+.dh-popup__color-btn:last-child { margin-right: 0; }
+
+.dh-popup__color-btn.is-active,
+.dh-popup__color-btn:hover {
+  background: var(--dh-black);
+  color: var(--dh-white);
+}
+
+/* Size dropdown */
+.dh-popup__size-select {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--dh-black);
+  background: var(--dh-white);
+  font-family: var(--dh-font-sans);
+  font-size: 12.5px;
+  color: var(--dh-black);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23111' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+}
+
+.dh-popup__size-select:focus {
+  outline: 2px solid var(--dh-black);
+  outline-offset: 1px;
+}
+
+/* ── Add to Cart button ── */
+.dh-popup__atc {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 15px 20px;
+  background: var(--dh-black);
+  color: var(--dh-white);
+  border: none;
+  font-family: var(--dh-font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.38s ease;
+}
+
+/* Yellow fill from left on hover */
+.dh-popup__atc::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--dh-yellow);
+  transform: translateX(-101%);
+  transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+.dh-popup__atc:hover::before { transform: translateX(0); }
+.dh-popup__atc:hover         { color: var(--dh-black); }
+
+.dh-popup__atc-text,
+.dh-popup__atc-arrow { position: relative; z-index: 1; }
+
+.dh-popup__atc:hover .dh-popup__atc-arrow {
+  transform: translateX(4px);
+  transition: transform 0.28s ease;
+}
+
+.dh-popup__atc.is-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Status message */
+.dh-popup__status {
+  font-family: var(--dh-font-sans);
+  font-size: 11.5px;
+  text-align: center;
+  margin: 9px 0 0;
+  min-height: 16px;
+  color: #444;
+}
+.dh-popup__status.is-success { color: #2e7d32; font-weight: 700; }
+.dh-popup__status.is-error   { color: #c62828; font-weight: 700; }
+
+
+/* ============================================================
+   RESPONSIVE — MOBILE  (≤ 768px)
+   2-column grid, no gap between cells,
+   hotspot moves to TOP-RIGHT corner (exact screenshot match)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  .dh-grid {
+    padding: 32px 0 48px;    /* edge-to-edge on mobile */
+  }
+
+  .dh-grid__heading {
+    font-size: clamp(20px, 5.5vw, 28px);
+    padding: 0 16px;
+    margin-bottom: 20px;
+  }
+
+  /* 2-column grid, zero gap (matches screenshot) */
+  .dh-grid__items {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  /* Square cells on mobile */
+  .dh-grid__item {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* ── Hotspot: MOBILE = centered ── */
+  .dh-grid__hotspot {
+    bottom: auto;
+    left: 50%;
+    top: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    font-size: 17px;
+  }
+
+  .dh-grid__hotspot:hover {
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+
+  /* Popup takes most of screen on mobile */
+  .dh-popup {
+    max-width: 100%;
+    margin: 0;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .dh-popup-overlay {
+    align-items: flex-end;   /* sheet slides up from bottom on mobile */
+  }
+
+  .dh-popup__img {
+    width: 80px;
+    height: 96px;
+  }
+
+  .dh-popup__title { font-size: 15px; }
+  .dh-popup__price { font-size: 13px; }
+}
