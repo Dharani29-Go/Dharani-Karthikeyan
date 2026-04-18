@@ -1,22 +1,9 @@
-{% comment %}
-  ============================================================
-  Section: dh-product-grid.liquid
-  Description: 6-product image grid.
-    Desktop: 3 columns × 2 rows, hotspot bottom-left
-    Mobile:  2 columns × 3 rows, hotspot top-right (matches screenshot)
-  Clicking a "+" hotspot opens the product popup.
-  Author: Dharani Karthikeyan
-  ============================================================
-{% endcomment %}
-
 {{ 'dh-product-grid.css' | asset_url | stylesheet_tag }}
 
 <section class="dh-grid" id="dh-grid-{{ section.id }}">
 
-  <!-- Section heading -->
   <h2 class="dh-grid__heading">{{ section.settings.grid_heading }}</h2>
 
-  <!-- 6-product grid -->
   <div class="dh-grid__items">
 
     {%- for block in section.blocks -%}
@@ -31,7 +18,6 @@
             alt="{{ product.title | escape }}"
             loading="lazy"
           >
-          <!-- Hotspot "+" button -->
           <button
             class="dh-grid__hotspot"
             aria-label="Quick view {{ product.title | escape }}"
@@ -52,14 +38,11 @@
       </div>
     {%- endfor -%}
 
-  </div><!-- /.dh-grid__items -->
+  </div>
 
-</section><!-- /.dh-grid -->
+</section>
 
 
-<!-- ============================================================
-     POPUP — single overlay, filled dynamically by JS
-     ============================================================ -->
 <div
   class="dh-popup-overlay"
   id="dhPopupOverlay"

@@ -1,18 +1,3 @@
-{% comment %}
-  ============================================================
-  Section: dh-banner.liquid
-  Description: Hero banner — pixel-perfect desktop + mobile.
-    Desktop: horizontal nav (brand | tagline | CTA btn)
-             full-height BG image, bottom-left text block
-    Mobile:  hamburger + centered brand nav
-             heading + description centered ABOVE the BG image
-             SHOP NOW button overlaid centrally on the image
-             shorter ticker text at the bottom
-  All red-boxed fields are editable from the Customizer.
-  Author: Dharani Karthikeyan
-  ============================================================
-{% endcomment %}
-
 {{ 'dh-banner.css' | asset_url | stylesheet_tag }}
 
 <section
@@ -23,35 +8,31 @@
   {% endif %}
 >
 
-  <!-- ══ DESKTOP NAV (hidden ≤768px) ══════════════════════ -->
   <nav class="dh-nav dh-nav--desktop" aria-label="Site navigation">
     <span class="dh-nav__brand">{{ section.settings.brand_name }}</span>
     <span class="dh-nav__tagline">{{ section.settings.nav_tagline }}</span>
     <a href="{{ section.settings.choose_gift_url }}" class="dh-btn dh-btn--yellow">
       <span class="dh-btn__text">{{ section.settings.choose_gift_label }}</span>
-      <span class="dh-btn__arrow">&#8594;</span>
+      <span class="dh-btn__arrow">&#8594;</span>  
     </a>
   </nav>
 
-  <!-- ══ MOBILE NAV (hidden >768px) ══════════════════════ -->
   <nav class="dh-nav dh-nav--mobile" aria-label="Site navigation">
     <button class="dh-hamburger" aria-label="Open menu" aria-expanded="false">
       <span class="dh-hamburger__line"></span>
       <span class="dh-hamburger__line"></span>
-      <span class="dh-hamburger__line"></span>
+      <span class="dh-hamburger__line"></span>         
     </button>
     <span class="dh-nav__brand dh-nav__brand--centered">{{ section.settings.brand_name }}</span>
     <!-- Spacer mirrors hamburger width to keep brand centred -->
     <span class="dh-nav__spacer" aria-hidden="true"></span>
   </nav>
 
-  <!-- ══ MOBILE: heading + description ABOVE image ═══════ -->
   <div class="dh-banner__text-mobile">
     <h1 class="dh-banner__heading--mobile">{{ section.settings.heading }}</h1>
     <p  class="dh-banner__desc--mobile">{{ section.settings.description }}</p>
   </div>
 
-  <!-- ══ IMAGE AREA (holds BG + overlaid content) ════════ -->
   <div class="dh-banner__stage">
 
     <!-- Desktop bottom-left text block -->
@@ -64,7 +45,6 @@
       </a>
     </div>
 
-    <!-- Mobile centred SHOP NOW button overlaid on image -->
     <div class="dh-banner__btn-mobile">
       <a href="{{ section.settings.shop_now_url }}" class="dh-btn dh-btn--dark">
         <span class="dh-btn__text">{{ section.settings.shop_now_label }}</span>
@@ -72,9 +52,8 @@
       </a>
     </div>
 
-  </div><!-- /.dh-banner__stage -->
+  </div>
 
-  <!-- ══ TICKER STRIP ════════════════════════════════════ -->
   <div class="dh-banner__ticker" aria-hidden="true">
     <div class="dh-banner__ticker-track">
       {%- for i in (1..8) -%}
@@ -84,7 +63,6 @@
   </div>
 
 </section>
-
 
 {% schema %}
 {
