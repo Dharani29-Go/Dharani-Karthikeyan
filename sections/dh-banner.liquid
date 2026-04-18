@@ -1,0 +1,177 @@
+{% comment %}
+  ============================================================
+  Section: dh-banner.liquid
+  Description: Hero banner — pixel-perfect desktop + mobile.
+    Desktop: horizontal nav (brand | tagline | CTA btn)
+             full-height BG image, bottom-left text block
+    Mobile:  hamburger + centered brand nav
+             heading + description centered ABOVE the BG image
+             SHOP NOW button overlaid centrally on the image
+             shorter ticker text at the bottom
+  All red-boxed fields are editable from the Customizer.
+  Author: Dharani Karthikeyan
+  ============================================================
+{% endcomment %}
+
+{{ 'dh-banner.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="dh-banner"
+  id="dh-banner-{{ section.id }}"
+  {% if section.settings.bg_image != blank %}
+    style="--dh-bg: url('{{ section.settings.bg_image | img_url: 'master' }}')"
+  {% endif %}
+>
+
+  <!-- ══ DESKTOP NAV (hidden ≤768px) ══════════════════════ -->
+  <nav class="dh-nav dh-nav--desktop" aria-label="Site navigation">
+    <span class="dh-nav__brand">{{ section.settings.brand_name }}</span>
+    <span class="dh-nav__tagline">{{ section.settings.nav_tagline }}</span>
+    <a href="{{ section.settings.choose_gift_url }}" class="dh-btn dh-btn--yellow">
+      <span class="dh-btn__text">{{ section.settings.choose_gift_label }}</span>
+      <span class="dh-btn__arrow">&#8594;</span>
+    </a>
+  </nav>
+
+  <!-- ══ MOBILE NAV (hidden >768px) ══════════════════════ -->
+  <nav class="dh-nav dh-nav--mobile" aria-label="Site navigation">
+    <button class="dh-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span class="dh-hamburger__line"></span>
+      <span class="dh-hamburger__line"></span>
+      <span class="dh-hamburger__line"></span>
+    </button>
+    <span class="dh-nav__brand dh-nav__brand--centered">{{ section.settings.brand_name }}</span>
+    <!-- Spacer mirrors hamburger width to keep brand centred -->
+    <span class="dh-nav__spacer" aria-hidden="true"></span>
+  </nav>
+
+  <!-- ══ MOBILE: heading + description ABOVE image ═══════ -->
+  <div class="dh-banner__text-mobile">
+    <h1 class="dh-banner__heading--mobile">{{ section.settings.heading }}</h1>
+    <p  class="dh-banner__desc--mobile">{{ section.settings.description }}</p>
+  </div>
+
+  <!-- ══ IMAGE AREA (holds BG + overlaid content) ════════ -->
+  <div class="dh-banner__stage">
+
+    <!-- Desktop bottom-left text block -->
+    <div class="dh-banner__content-desktop">
+      <h1 class="dh-banner__heading">{{ section.settings.heading }}</h1>
+      <p  class="dh-banner__desc">{{ section.settings.description }}</p>
+      <a href="{{ section.settings.shop_now_url }}" class="dh-btn dh-btn--dark">
+        <span class="dh-btn__text">{{ section.settings.shop_now_label }}</span>
+        <span class="dh-btn__arrow">&#8594;</span>
+      </a>
+    </div>
+
+    <!-- Mobile centred SHOP NOW button overlaid on image -->
+    <div class="dh-banner__btn-mobile">
+      <a href="{{ section.settings.shop_now_url }}" class="dh-btn dh-btn--dark">
+        <span class="dh-btn__text">{{ section.settings.shop_now_label }}</span>
+        <span class="dh-btn__arrow">&#8594;</span>
+      </a>
+    </div>
+
+  </div><!-- /.dh-banner__stage -->
+
+  <!-- ══ TICKER STRIP ════════════════════════════════════ -->
+  <div class="dh-banner__ticker" aria-hidden="true">
+    <div class="dh-banner__ticker-track">
+      {%- for i in (1..8) -%}
+        <span class="dh-banner__ticker-item">{{ section.settings.ticker_text }}</span>
+      {%- endfor -%}
+    </div>
+  </div>
+
+</section>
+
+
+{% schema %}
+{
+  "name": "DH Banner",
+  "tag": "section",
+  "class": "dh-banner-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image",
+      "info": "Export the illustrated flat-lay from Figma (PNG 2x). This fills the entire banner area on both desktop and mobile."
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand Name",
+      "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "nav_tagline",
+      "label": "Tagline (desktop nav, centre)",
+      "default": "Find the ideal gift for your loved ones."
+    },
+    {
+      "type": "text",
+      "id": "choose_gift_label",
+      "label": "Choose Gift — button text",
+      "default": "CHOOSE GIFT"
+    },
+    {
+      "type": "url",
+      "id": "choose_gift_url",
+      "label": "Choose Gift — URL"
+    },
+    {
+      "type": "header",
+      "content": "Hero Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "The Gift Guide"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
+    },
+    {
+      "type": "text",
+      "id": "shop_now_label",
+      "label": "Shop Now — button text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "shop_now_url",
+      "label": "Shop Now — URL"
+    },
+    {
+      "type": "header",
+      "content": "Ticker Strip"
+    },
+    {
+      "type": "text",
+      "id": "ticker_text",
+      "label": "Ticker Text",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "DH Banner",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

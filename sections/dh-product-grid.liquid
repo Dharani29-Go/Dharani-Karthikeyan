@@ -1,0 +1,146 @@
+{% comment %}
+  ============================================================
+  Section: dh-product-grid.liquid
+  Description: 6-product image grid.
+    Desktop: 3 columns × 2 rows, hotspot bottom-left
+    Mobile:  2 columns × 3 rows, hotspot top-right (matches screenshot)
+  Clicking a "+" hotspot opens the product popup.
+  Author: Dharani Karthikeyan
+  ============================================================
+{% endcomment %}
+
+{{ 'dh-product-grid.css' | asset_url | stylesheet_tag }}
+
+<section class="dh-grid" id="dh-grid-{{ section.id }}">
+
+  <!-- Section heading -->
+  <h2 class="dh-grid__heading">{{ section.settings.grid_heading }}</h2>
+
+  <!-- 6-product grid -->
+  <div class="dh-grid__items">
+
+    {%- for block in section.blocks -%}
+      {%- assign product = block.settings.product -%}
+      <div class="dh-grid__item" {{ block.shopify_attributes }}>
+
+        {%- if product != blank -%}
+          <!-- Product image -->
+          <img
+            class="dh-grid__img"
+            src="{{ product.featured_image | img_url: '600x' }}"
+            alt="{{ product.title | escape }}"
+            loading="lazy"
+          >
+          <!-- Hotspot "+" button -->
+          <button
+            class="dh-grid__hotspot"
+            aria-label="Quick view {{ product.title | escape }}"
+            data-product-title="{{ product.title | escape }}"
+            data-product-price="{{ product.price | money }}"
+            data-product-description="{{ product.description | strip_html | truncate: 200 | escape }}"
+            data-product-image="{{ product.featured_image | img_url: '300x' }}"
+            data-product-options="{{ product.options_with_values | json | escape }}"
+            data-product-variants="{{ product.variants | json | escape }}"
+          >+</button>
+        {%- else -%}
+          <!-- Placeholder for unassigned slot -->
+          <div class="dh-grid__placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'dh-grid__placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+      </div>
+    {%- endfor -%}
+
+  </div><!-- /.dh-grid__items -->
+
+</section><!-- /.dh-grid -->
+
+
+<!-- ============================================================
+     POPUP — single overlay, filled dynamically by JS
+     ============================================================ -->
+<div
+  class="dh-popup-overlay"
+  id="dhPopupOverlay"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="dhPopupTitle"
+>
+  <div class="dh-popup" id="dhPopup">
+
+    <!-- Close -->
+    <button class="dh-popup__close" id="dhPopupClose" aria-label="Close">&times;</button>
+
+    <!-- Header: image + meta -->
+    <div class="dh-popup__header">
+      <img class="dh-popup__img" id="dhPopupImg" src="" alt="">
+      <div class="dh-popup__meta">
+        <h3 class="dh-popup__title" id="dhPopupTitle"></h3>
+        <p  class="dh-popup__price" id="dhPopupPrice"></p>
+        <p  class="dh-popup__desc"  id="dhPopupDesc"></p>
+      </div>
+    </div>
+
+    <!-- Variant selectors (rendered by JS) -->
+    <div class="dh-popup__variants" id="dhPopupVariants"></div>
+
+    <!-- Add to Cart -->
+    <button class="dh-popup__atc" id="dhPopupATC">
+      <span class="dh-popup__atc-text">ADD TO CART</span>
+      <span class="dh-popup__atc-arrow">&#8594;</span>
+    </button>
+
+    <!-- Status message -->
+    <p class="dh-popup__status" id="dhPopupStatus" aria-live="polite"></p>
+
+  </div><!-- /.dh-popup -->
+</div><!-- /.dh-popup-overlay -->
+
+{{ 'dh-product-grid.js' | asset_url | script_tag }}
+
+
+{% schema %}
+{
+  "name": "DH Product Grid",
+  "tag": "section",
+  "class": "dh-grid-section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "grid_heading",
+      "label": "Section Heading",
+      "default": "Tisso vison in the wild"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_item",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "DH Product Grid",
+      "category": "Custom",
+      "blocks": [
+        { "type": "product_item" },
+        { "type": "product_item" },
+        { "type": "product_item" },
+        { "type": "product_item" },
+        { "type": "product_item" },
+        { "type": "product_item" }
+      ]
+    }
+  ]
+}
+{% endschema %}
